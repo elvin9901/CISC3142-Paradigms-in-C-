@@ -131,6 +131,6 @@ int main() {
     out_steream << "SKU" << "\t" << "Brand" << "\t" << "Category" << "\t" << "Year" << "\t" << "Price" <<  endl;
 
     for (int j = 0; j < vSKU.size(); j++) {
-        out_steream << vSKU[j] << "\t" << vBrand[j] << "\t \t" << vCategory[j] << "\t \t \t" << vYear[j] << "\t" << vPrice[j] << endl;
+        out_steream << vSKU[j] << "\t \t" << vBrand[j] << "\t \t" << vCategory[j] << "\t \t \t \t" << vYear[j] << "\t " << vPrice[j] << endl;
     }
 }
