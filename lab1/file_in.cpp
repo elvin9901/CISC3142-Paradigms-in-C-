@@ -1,5 +1,6 @@
 // This file shows basic functions of reading in a CSV file using C++98
-// Please add your name to your code!
+
+// ELVIN GULIYEV
 
 /* Homework Objective: fix this program to match the requirements listed:
   1. successfully reads all lines of the input file
