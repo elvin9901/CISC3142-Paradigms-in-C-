@@ -12,15 +12,15 @@ All programs must be able to compile in C++98 standard (the default version on L
 
 */
 
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <vector>
-#include <fstream>
-#include <map>
-
-using namespace std;
-
+// #include <iostream>
+// #include <string>
+// #include <sstream>
+// #include <vector>
+// #include <fstream>
+// #include <map>
+//
+// using namespace std;
+#include "lab.h"
 int main() {
 
     // define variables
@@ -44,7 +44,13 @@ int main() {
     ifstream in_stream;
     in_stream.open("./data.csv"); //opening the file.
     ofstream out_steream;
-    out_steream.open ("output.txt"); // opening the output file.
+
+
+    // out_steream.open ("output.txt"); // opening the output file.
+    FILE *fp;
+    fp = fopen("output.txt", "w+");
+
+
 
     if (!in_stream.fail()) { //if the file is open
 
@@ -95,43 +101,63 @@ int main() {
         in_stream.close(); //closing the file
 
     } else {
-        cout << "Unable to open file";
+        // cout << "Unable to open file";
+
+        fprintf(fp,"%s", "Unable to open file ");
     }
 
 
 
     /* Iterating over the categories and printing the average price for each
      * Average price = sum of price / count of occurrences of the category */
-    for (std::map<string, float>::iterator it = mTotalCategoryPrice.begin(); it != mTotalCategoryPrice.end(); ++it)
-        out_steream << "Category " << it->first << " Average Price is " << it->second / mCategoryCount[it->first] << '\n';
-    out_steream << "------------------------------------------------  " << endl;
+    for (std::map<string, float>::iterator it = mTotalCategoryPrice.begin(); it != mTotalCategoryPrice.end(); ++it){
+      fprintf(fp, "%s %s %s %4.2f\n", "Category", it->first.c_str(), " Average Price is $", it->second / mCategoryCount[it->first]);
+    }
+        // out_steream << "Category " << it->first << " Average Price is " << it->second / mCategoryCount[it->first] << '\n';
+
+fprintf(fp, "\n");
+    // out_steream << "------------------------------------------------  " << endl;
 
     /* Iterating over the brands and printing the average price for each
      * Average price = sum of price / count of brands of the category */
-    for (std::map<string, float>::iterator it = mTotalBrandPrice.begin(); it != mTotalBrandPrice.end(); ++it)
-        out_steream << "Brand " << it->first << " Average Price is " << it->second / mBrandCount[it->first] << '\n';
-    out_steream << endl;
-    out_steream << "-------------------------------------------------  " << endl;
+    for (std::map<string, float>::iterator it = mTotalBrandPrice.begin(); it != mTotalBrandPrice.end(); ++it){
+  fprintf(fp, "%s %s %s %4.2f\n", "Brand", it->first.c_str()," Average Price is $", it->second / mBrandCount[it->first]);
 
+    }
+        // out_steream << "Brand " << it->first << " Average Price is " << it->second / mBrandCount[it->first] << '\n';
+
+    // out_steream << endl;
+    // out_steream << "-------------------------------------------------  " << endl;
+fprintf(fp, "\n\n" );
     /* Feature 2: for each unique year, list the count of SKUs and print out the SKUs as a list
      * Iterating over the years and printing :
      *  * the year and the count SKUs
      *  * the list of SKUs */
     for (std::map<int, int>::iterator it = mYearSKUsCount.begin(); it != mYearSKUsCount.end(); ++it){
-        out_steream << it->first << " ( " << it->second << " ) : ";
+
+        // out_steream << it->first << " ( " << it->second << " ) : ";
+
+        fprintf(fp, "%d ( %d ): ",it->first, it->second);
+
         for (int j = 0; j < mYearSKUs[it->first].size()-1; j++) { // iterate over the elements of the SKUs of the year
-            out_steream << mYearSKUs[it->first][j] << ", ";// display the SKU
+            // out_steream << mYearSKUs[it->first][j] << ", ";// display the SKU
+            fprintf(fp, "%d , ", mYearSKUs[it->first][j] );
         }
-        out_steream << mYearSKUs[it->first][mYearSKUs[it->first].size()-1]; //display the last SKU of the year
-        out_steream << endl; // add a line break
+        // out_steream << mYearSKUs[it->first][mYearSKUs[it->first].size()-1]; //display the last SKU of the year
+        fprintf(fp, "%d\n", mYearSKUs[it->first][mYearSKUs[it->first].size()-1]);
+        // out_steream << endl; // add a line break
+        fprintf(fp, "\n");
     }
-    out_steream << endl;
-    out_steream << "--------------------------------------------------  " << endl;
+    // out_steream << endl;
+    fprintf(fp, "\n" );
+
+    // out_steream << "--------------------------------------------------  " << endl;
 
     //output values
-    out_steream << "SKU" << "\t" << "Brand" << "\t" << "Category" << "\t" << "Year" << "\t" << "Price" <<  endl;
-
+    // out_steream << "SKU" << "\t" << "Brand" << "\t" << "Category" << "\t" << "Year" << "\t" << "Price" <<  endl;
+   fprintf(fp, "%s %s %s %s %s\n ", " SKU ", " Brand ", " Category ", " Year ", " Price " );
     for (int j = 0; j < vSKU.size(); j++) {
-        out_steream << vSKU[j] << "\t \t" << vBrand[j] << "\t \t" << vCategory[j] << "\t \t \t \t" << vYear[j] << "\t " << vPrice[j] << endl;
+        // out_steream << vSKU[j] << "\t \t" << vCategory[j] << "\t \t \t \t" << vYear[j] << "\t " << vPrice[j] << endl;
+        fprintf(fp,"%d \t\t %s \t\t %s \t\t\t %d \t\t $ %4.2f\n", vSKU[j],vBrand[j].c_str(), vCategory[j].c_str() , vYear[j],vPrice[j] );
     }
 }
