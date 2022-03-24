@@ -18,18 +18,19 @@ Calculator cal;
 const char * expressionToParse;
 //(5+6)*10/10
 
+//to get the next first oprand to be calculated
 char peek()
 {
     return * expressionToParse;
 }
-
+//to make the expressionToParse at the next operand to be calculated
 char get()
 {
     return * expressionToParse++;
 }
 
 float expression();
-
+//to calculate the result
 float number()
 {
     float result = get() - '0';
@@ -39,7 +40,7 @@ float number()
     }
     return result;
 }
-
+// to split the expression into group of numbers and group of operators
 float factor()
 {
     if (peek() >= '0' && peek() <= '9')
@@ -83,7 +84,7 @@ float expression()
     return result;
 }
 
-
+//used to run the program
 int main(int argc, char *argv[])
 {
     std::cout << "--to calculate the SQRT, type R(number) \n for example, to calculate the sqrt for 64, type R(64)"<< std::endl;
