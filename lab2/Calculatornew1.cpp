@@ -59,7 +59,7 @@ float factor()
     }
     return 0; // error
 }
-
+// to evaluate the division and multiplication operations
 float term()
 {
     float result = factor();
@@ -70,7 +70,7 @@ float term()
             result /= factor();
     return result;
 }
-
+// to evaluate plus , minus, sqrt operations
 float expression()
 {
     float result = term();
